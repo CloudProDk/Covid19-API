@@ -14,10 +14,10 @@ module.exports = function (app) {
   app
     .route("/shop")
     .get(shop.get_all_products)
-    // .post(shop.add_product_to_products)
-    .post(cart.add_cart_item)
-    // .post(cart.add_cart)
+    .post(shop.add_product_to_products)
     .delete(shop.delete_product);
+  app.route("/shop/addCart").post(cart.add_cart);
+  app.route("/shop/addCartItem").post(cart.add_cart_item);
 
   app
     .route("/shop/cart/:uuid")

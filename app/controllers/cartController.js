@@ -19,13 +19,10 @@ exports.get_cart_with_items_by_uuid = function (req, res) {
 
 // Add cart-item with product to cart
 exports.add_cart_item = function (req, res) {
-  var cartID = req.body.cartID;
-  var productID = req.body.productID;
-  // var uuid = req.body.uuid;
-  // var totalPrice = 1000;
-  // sql query
+  var cartID = req.body.cart;
+  var productID = req.body.product;
+
   const query = "INSERT INTO cart_item(cart, product) VALUES(?, ?);";
-  // const query1 = "INSERT INTO cart(uuid, total_price) VALUES (?, ?);";
 
   sql.query(query, [cartID, productID], (err, rows, fields) => {
     if (err) {
@@ -35,14 +32,6 @@ exports.add_cart_item = function (req, res) {
     }
     res.send(req.body);
   });
-  // sql.query(query1, [uuid, totalPrice], (err, rows, fields) => {
-  //   if (err) {
-  //     console.log("Error " + err);
-  //     res.sendStatus(500);
-  //     return;
-  //   }
-  //   res.send(req.body);
-  // });
 };
 
 // Add cart

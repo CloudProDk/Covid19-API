@@ -14,15 +14,13 @@ module.exports = function (app) {
   app
     .route("/shop")
     .get(shop.get_all_products)
-    // .post(shop.add_product_to_products)
-    .post(cart.add_cart_item)
-    // .post(cart.add_cart)
+    .post(shop.add_product_to_products)
     .delete(shop.delete_product);
-
-  app
-    .route("/shop/cart/:uuid")
-    .get(cart.get_cart_with_items_by_uuid)
-    .delete(cart.delete_cart_item);
+  app.route("/shop/addCart").post(cart.add_cart);
+  app.route("/shop/addCartItem").post(cart.add_cart_item);
+  app.route("/cart/:uuid").get(cart.get_cart_by_uuid);
+  app.route("/shop/cart/:uuid").get(cart.get_cart_with_items_by_uuid);
+  app.route("/shop/cart/:cart_item_id").delete(cart.delete_cart_item);
 
   // Wishlist
   // app.route('/wish')

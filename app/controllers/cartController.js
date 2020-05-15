@@ -22,7 +22,8 @@ exports.get_cart_with_items_by_uuid = function (req, res) {
   const cartUuid = req.params.uuid;
   //sql query
   const query =
-    "SELECT cart.id, cart.total_price, cart_item.id as cart_item_id, cart_item.product, product.name, product.price, product.quantity, product.img_url FROM cart INNER JOIN cart_item ON cart.id = cart_item.cart INNER JOIN product ON cart_item.product = product.id WHERE cart.uuid = ? AND cart_item.product = product.id";
+    "SELECT cart.id, cart_item.id as cart_item_id, cart_item.product, product.name,  COUNT(product.name) AS number_of_items, product.price, COUNT(product.name) * product.price AS total_price, product.quantity, product.img_url FROM cart INNER JOIN cart_item ON cart.id = cart_item.cart INNER JOIN product ON cart_item.product = product.id WHERE cart.uuid = ? AND cart_item.product = product.id";
+  // "SELECT cart_item.product, product.name, COUNT(product.name) AS number_of_items, product.price, COUNT(product.name) * product.price AS total_price FROM cart INNER JOIN cart_item ON cart.id = cart_item.cart INNER JOIN product ON cart_item.product = product.id WHERE cart.uuid = ? AND cart_item.product = product.id GROUP BY product.name";
 
   sql.query(query, [cartUuid], (err, rows, fields) => {
     if (err) {

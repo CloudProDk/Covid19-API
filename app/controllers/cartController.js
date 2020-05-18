@@ -40,9 +40,10 @@ exports.add_cart_item = function (req, res) {
   var cartID = req.body.cart;
   var productID = req.body.product;
 
-  const query = "INSERT INTO cart_item(cart, product) VALUES(?, ?);";
+  const query =
+    "INSERT INTO cart_item(cart, product) VALUES(?, ?); UPDATE product SET quantity = quantity - 1 WHERE id = ?";
 
-  sql.query(query, [cartID, productID], (err, rows, fields) => {
+  sql.query(query, [cartID, productID, productID], (err, rows, fields) => {
     if (err) {
       console.log("Error " + err);
       res.sendStatus(500);
@@ -72,9 +73,11 @@ exports.add_cart = function (req, res) {
 // Delete cart_item
 exports.delete_cart_item = function (req, res) {
   var cartItemID = req.params.cart_item_id;
+  var productID = req.params.cart_item.product;
   // sql query
-  const query = "DELETE FROM cart_item WHERE id = ?";
-  sql.query(query, [cartItemID], (err, rows, fields) => {
+  const query =
+    "DELETE FROM cart_item WHERE id = ?; UPDATE product SET quantity = quantity + 1 WHERE id = ?;";
+  sql.query(query, [cartItemID, productID], (err, rows, fields) => {
     if (err) {
       console.log("Error " + err);
       res.sendStatus(500);

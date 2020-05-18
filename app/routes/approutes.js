@@ -20,7 +20,9 @@ module.exports = function (app) {
   app.route("/shop/addCartItem").post(cart.add_cart_item);
   app.route("/cart/:uuid").get(cart.get_cart_by_uuid);
   app.route("/shop/cart/:uuid").get(cart.get_cart_with_items_by_uuid);
-  app.route("/shop/cart/:cart_item_id").delete(cart.delete_cart_item);
+  app
+    .route("/shop/cart/:cart_item_id/:cart_item_product")
+    .delete(cart.delete_cart_item);
 
   // Wishlist
   // app.route('/wish')

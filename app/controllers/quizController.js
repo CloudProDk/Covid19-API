@@ -18,7 +18,7 @@ exports.get_all_highscores = function (req, res) {
 // Add score to highscores
 exports.add_score_to_highscores = function (req, res) {
   // sql query
-  const query = "INSERT INTO high_score(score, name) VALUES(?)";
+  const query = "INSERT INTO high_score(score, name) VALUES(?, ?)";
 
   var score = req.body.score;
   var name = req.body.name;

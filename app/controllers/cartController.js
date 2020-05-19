@@ -5,7 +5,7 @@ exports.get_cart_by_uuid = function (req, res) {
   const cartUuid = req.params.uuid;
   //sql query
   const query =
-    "SELECT cart.id, cart.uuid, cart.total_price FROM cart WHERE cart.uuid = ?";
+    "SELECT cart.id, cart.uuid FROM cart WHERE cart.uuid = ?";
 
   sql.query(query, [cartUuid], (err, rows, fields) => {
     if (err) {
@@ -64,11 +64,10 @@ exports.add_cart_item = function (req, res) {
 // Add cart
 exports.add_cart = function (req, res) {
   var uuid = req.body.uuid;
-  var totalPrice = 1000;
   // sql query
-  const query = "INSERT INTO cart(uuid, total_price) VALUES (?, ?);";
+  const query = "INSERT INTO cart(uuid) VALUES (?);";
 
-  sql.query(query, [uuid, totalPrice], (err, rows, fields) => {
+  sql.query(query, [uuid], (err, rows, fields) => {
     if (err) {
       console.log("Error " + err);
       res.sendStatus(500);
